@@ -2,13 +2,21 @@
 import React from 'react';
 import './App.css';
 import Row from './components/Row';
+import Banner from './components/Banner';
 import requests from './requests';
 
 function App() {
   return (
     <>
-      <h1> Good to go !</h1>
-      <Row title="Trending" fetchURL={requests.fetchTrending}></Row>
+      {/* Navbar */}
+      {/* Banner */}
+      <Banner></Banner>
+      <Row 
+      title="Trending" 
+      fetchURL={requests.fetchTrending}
+      //by default belowline would mean true
+      isLargeRow
+      ></Row>
       <Row title="Netflix Originals" fetchURL={requests.fetchNetflixOriginals}></Row>
       <Row title="Top Rated" fetchURL={requests.fetchTopRated}></Row>
       <Row title="Action Movies" fetchURL={requests.fetchActionMovies}></Row>

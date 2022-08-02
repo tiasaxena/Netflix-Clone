@@ -1,0 +1,38 @@
+.row {
+    margin-left: 20px;
+}
+
+.row__posters {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    /* since overflow along y is hidden, upon hover extra parts would we cut out. We don't want that. Certainly, we add padding  */
+    padding: 20px;
+}
+
+/* hide the scrollbar */
+.row__posters::-webkit-scrollbar {
+    display: none;
+}
+
+.row__poster {
+    /* rectifies the aspect ratio */
+    object-fit: contain;
+    max-height: 200px;
+    /* makes sure that each poster always occupies 100% of screen */
+    width: 100%;
+    margin-right: 10px;
+    transition: transform 450ms;
+}
+
+.row__poster:hover {
+    transform: scale(1.08);
+}
+
+.row__posterLarge {
+    max-height: 250px;
+}
+
+.row__posterLarge:hover {
+    transform: scale(1.09);
+}
