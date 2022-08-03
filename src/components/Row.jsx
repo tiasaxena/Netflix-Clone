@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../axios'; //since in '../axios.js', there is he default export, while importing we can name it anything we like. But for others, we got to destructure and use the same nomenclature.
-import "./Row.css"
+import "./Row.css";
+import Youtube from 'react-youtube';
+import movieTrailer from 'movie-trailer';
 
 
 //base URL to get the poster images
@@ -9,6 +11,7 @@ const base_url = "https://image.tmdb.org/t/p/original/";
 function Row(props) {
 
     const [movies, setMovies] = useState([]);
+    const [trailerUrl, setTrailerUrl] = useState();
 
     //We have to populate the movies
     //Now, what we need is something that runs on a specific condition/variable
@@ -25,7 +28,27 @@ function Row(props) {
             return request;
         }
         fetchData();
-    }, [props.fetchURL]);
+    }, [props.fetchURL]); 
+
+    const opts = {
+        height: '390',
+        width: '100%',
+        playerVars: {
+            autoplay: 1
+        },
+    };
+
+    function handleClick(movie) {
+        if(trailerUrl) {
+            setTrailerUrl('');
+        } else {
+            movieTrailer(movie?.name || movie?.title || "")
+            .then(url => {
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerUrl(urlParams.get('v'));
+            }).catch((err) => console.log(err));
+        }
+    }
 
     return (
         <>
@@ -38,12 +61,14 @@ function Row(props) {
                     {movies.map( movie => (
                         <img 
                         key={movie.id}
+                        onClick={ () => handleClick(movie)}
                         // if it is the netflix original section, then the an additinal class needs to be added
                         className={`row__poster ${props.isLargeRow && "row__posterLarge"}`} 
                         src={ `${base_url}${ props.isLargeRow ? movie.poster_path : movie.backdrop_path}` } 
                         alt={movie.title}></img>
                     ))}
                 </div>
+                {trailerUrl && <Youtube videoId={trailerUrl} opts={opts} /> }
             </div>
 
         </>
