@@ -21,7 +21,7 @@ function Row(props) {
             const request = await axios.get(props.fetchURL);
             //axios.get(props.fetchUrl) ==> "https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US"
             setMovies(request.data.results);
-            console.table(request.data.results);
+            // console.table(request.data.results);
             return request;
         }
         fetchData();
